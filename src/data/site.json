@@ -1,0 +1,14 @@
+{
+  "title": "Mari Skakun",
+  "tagline": "Abstract and linear paintings",
+  "location": "Rambouillet, France",
+  "email": "mari.skakun.art@gmail.com",
+  "instagram": "https://www.instagram.com/m.skakun_art/",
+  "facebook": "https://www.facebook.com/m.skakunart",
+  "nav": [
+    { "label": "Catalog", "href": "/catalog/" },
+    { "label": "About", "href": "/about-me/" },
+    { "label": "Contacts", "href": "/contacts/" },
+    { "label": "For a Present", "href": "/for-a-present/" }
+  ]
+}

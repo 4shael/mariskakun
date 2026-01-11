@@ -1,0 +1,33 @@
+---
+const { painting } = Astro.props;
+const image = painting.data.images?.[0];
+const currency = painting.data.currency || "";
+const price = painting.data.price
+  ? `${currency}${currency ? " " : ""}${painting.data.price}`.trim()
+  : null;
+const sold = painting.data.isSold;
+const category = painting.data.categories?.[0]?.name;
+---
+<article
+  class="card reveal"
+  style={`--delay: ${painting.data.delay || "0ms"}`}
+  data-categories={painting.data.categories.map((cat) => cat.slug).join(" ")}
+>
+  <a href={`/catalog/${painting.slug}/`}>
+    {image ? (
+      <img src={image.src} alt={image.alt || painting.data.title} />
+    ) : (
+      <div class="card-image-placeholder"></div>
+    )}
+    <div>
+      <div class="card-title">{painting.data.title}</div>
+      <div class="card-meta">
+        {category ? category : "Original painting"}
+      </div>
+    </div>
+  </a>
+  <div>
+    {sold ? <span class="badge">Sold</span> : null}
+    {price ? <span class="card-price">{price}</span> : null}
+  </div>
+</article>

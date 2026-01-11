@@ -1,0 +1,67 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PaintingCard from "../../components/PaintingCard.astro";
+import { getCollection } from "astro:content";
+
+const paintings = await getCollection("paintings");
+
+const categoryMap = new Map();
+paintings.forEach((painting) => {
+  painting.data.categories.forEach((category) => {
+    categoryMap.set(category.slug, category.name);
+  });
+});
+
+const categories = Array.from(categoryMap.entries()).map(([slug, name]) => ({
+  slug,
+  name,
+}));
+---
+
+<BaseLayout title="Catalog | Mari Skakun" description="Browse original paintings by Mari Skakun.">
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Catalog</div>
+        <h1 class="section-title">All paintings</h1>
+      </div>
+      <p class="lead">Filter by series or size to find the right piece.</p>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.5rem;">
+      <button class="button active" data-filter="all" type="button">All</button>
+      {categories.map((category) => (
+        <button class="button" data-filter={category.slug} type="button">
+          {category.name}
+        </button>
+      ))}
+    </div>
+
+    <div class="grid" data-grid>
+      {paintings.map((painting, index) => (
+        <PaintingCard painting={{ ...painting, data: { ...painting.data, delay: `${index * 50}ms` } }} />
+      ))}
+    </div>
+  </section>
+
+  <script is:inline>
+    const buttons = document.querySelectorAll('[data-filter]');
+    const cards = document.querySelectorAll('[data-categories]');
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const filter = button.getAttribute('data-filter');
+        buttons.forEach((btn) => btn.classList.toggle('active', btn === button));
+
+        cards.forEach((card) => {
+          if (filter === 'all') {
+            card.style.display = '';
+            return;
+          }
+          const categories = card.getAttribute('data-categories') || '';
+          card.style.display = categories.includes(filter) ? '' : 'none';
+        });
+      });
+    });
+  </script>
+</BaseLayout>

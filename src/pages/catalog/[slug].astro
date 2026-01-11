@@ -1,0 +1,56 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const paintings = await getCollection("paintings");
+  return paintings.map((painting) => ({
+    params: { slug: painting.slug },
+    props: { painting },
+  }));
+}
+
+const { painting } = Astro.props;
+const { Content } = await painting.render();
+const image = painting.data.images?.[0];
+const currency = painting.data.currency || "";
+const price = painting.data.price
+  ? `${currency}${currency ? " " : ""}${painting.data.price}`.trim()
+  : null;
+---
+
+<BaseLayout
+  title={`${painting.data.title} | Mari Skakun`}
+  description={painting.data.title}
+  image={image?.src}
+>
+  <section class="section">
+    <a class="muted-link" href="/catalog/">← Back to catalog</a>
+    <div class="hero" style="margin-top: 2rem;">
+      <div>
+        <div class="eyebrow">Original artwork</div>
+        <h1 class="display">{painting.data.title}</h1>
+        <p class="lead">
+          {painting.data.isSold ? "Sold artwork" : "Available"}
+          {price ? ` · ${price}` : ""}
+        </p>
+        <div style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+          {painting.data.categories.map((category) => (
+            <span class="badge">{category.name}</span>
+          ))}
+        </div>
+      </div>
+      <div class="hero-image">
+        {image ? (
+          <img src={image.src} alt={image.alt || painting.data.title} />
+        ) : null}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="hero-card">
+      <Content />
+    </div>
+  </section>
+</BaseLayout>

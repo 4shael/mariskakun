@@ -1,0 +1,83 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PaintingCard from "../components/PaintingCard.astro";
+import site from "../data/site.json";
+import { getCollection } from "astro:content";
+
+const paintings = await getCollection("paintings");
+const featured = paintings.slice(0, 6).map((item, index) => ({
+  ...item,
+  data: { ...item.data, delay: `${index * 80}ms` },
+}));
+
+const heroImage =
+  "https://mariskakun.com/wp-content/uploads/2024/05/IMG_0751-1.jpeg";
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: site.title,
+  jobTitle: "Artist",
+  url: Astro.site ? Astro.site.toString() : site.instagram,
+  sameAs: [site.instagram, site.facebook],
+};
+---
+
+<BaseLayout
+  title={`${site.title} | Abstract and linear paintings`}
+  description={site.tagline}
+  image={heroImage}
+>
+  <script type="application/ld+json" is:inline>
+    {JSON.stringify(jsonLd)}
+  </script>
+
+  <section class="hero">
+    <div class="hero-card reveal" style="--delay: 60ms;">
+      <div class="eyebrow">Artist portfolio</div>
+      <h1 class="display">Paintings that carry light, energy, and memory.</h1>
+      <p class="lead">
+        Mari Skakun creates abstract and linear works inspired by travel, nature,
+        and the emotional landscapes of everyday life. Each piece is original and
+        comes with a certificate of authenticity.
+      </p>
+      <div style="margin-top: 1.8rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+        <a class="button" href="/catalog/">Explore catalog</a>
+        <a class="muted-link" href="/about-me/">Read the artist story</a>
+      </div>
+    </div>
+    <div class="hero-image reveal" style="--delay: 140ms;">
+      <img src={heroImage} alt="Abstract painting by Mari Skakun" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Featured works</div>
+        <h2 class="section-title">Selected paintings</h2>
+      </div>
+      <a class="muted-link" href="/catalog/">View all paintings →</a>
+    </div>
+    <div class="grid">
+      {featured.map((painting) => (
+        <PaintingCard painting={painting} />
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Work with Mari</div>
+        <h2 class="section-title">Commissions and inquiries</h2>
+      </div>
+    </div>
+    <div class="hero-card">
+      <p class="lead">
+        Interested in a custom piece or purchasing an artwork? Reach out for
+        availability, pricing, and shipping details.
+      </p>
+      <a class="button" href={`mailto:${site.email}`}>Contact via email</a>
+    </div>
+  </section>
+</BaseLayout>

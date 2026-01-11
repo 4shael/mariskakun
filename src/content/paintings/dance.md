@@ -1,0 +1,40 @@
+---
+title: "Sold. Dance"
+slug: "dance"
+price: "800"
+currency: "€"
+images:
+  -
+    src: "https://mariskakun.com/wp-content/uploads/2025/03/DSCF4299-scaled.jpeg"
+    alt: ""
+  -
+    src: "https://mariskakun.com/wp-content/uploads/2025/03/DSCF4299-scaled.jpeg"
+    alt: ""
+  -
+    src: "https://mariskakun.com/wp-content/uploads/2025/03/6DC66B1F-8B70-46B4-9E4B-2BAB4CFFBCD0.jpeg"
+    alt: ""
+  -
+    src: "https://mariskakun.com/wp-content/uploads/2025/03/DSCF4255-scaled.jpeg"
+    alt: ""
+  -
+    src: "https://mariskakun.com/wp-content/uploads/2025/03/DSCF4291-scaled.jpeg"
+    alt: ""
+  -
+    src: "https://mariskakun.com/wp-content/uploads/2025/03/DSCF4245-scaled.jpeg"
+    alt: ""
+categories:
+  -
+    name: "L 100-150cm"
+    slug: "size-l"
+  -
+    name: "Oil/Acrylic paintings"
+    slug: "oil-acrylic"
+  -
+    name: "Series of paintings “Structūra”"
+    slug: "structura"
+isSold: true
+availability: "in-stock"
+---
+
+<p>Sold in 2023 to London </p>
+
